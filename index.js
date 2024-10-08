@@ -3,8 +3,8 @@ const ctx = canvas.getContext("2d");
 
 let x = canvas.width / 2;
 let y = canvas.height - 30;
-let dx = 2;
-let dy = -2;
+let dx = 1.5;
+let dy = -1.5;
 const ballRadius = 10;
 
 var paddleHeight = 10;
@@ -34,6 +34,18 @@ let currColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
 
 async function changeColor() {
     currColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
+}
+async function speedUp() {
+    if (dx < 0) {
+        dx = dx - 0.1
+    } else {
+        dx = dx + 0.1
+    }
+    if (dy < 0) {
+        dy = dy - 0.1
+    } else {
+        dy = dy + 0.1
+    }
 }
 
 function drawBall() {
@@ -118,6 +130,7 @@ function collisionDetection() {
                     dy = -dy;
                     b.status = 0;
                     score++;
+                    speedUp();
                     changeColor();
                     if (score === brickRowCount * brickColumnCount) {
                         alert("YOU WIN, CONGRATULATIONS!");
