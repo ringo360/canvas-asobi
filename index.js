@@ -7,28 +7,57 @@ let dx = 2;
 let dy = -2;
 const ballRadius = 10;
 
+var paddleHeight = 10;
+var paddleWidth = 75;
+var paddleX = (canvas.width-paddleWidth)/2;
 let rightPressed = false;
 let leftPressed = false;
 
 function drawBall() {
     ctx.beginPath();
-    ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+    ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
+}
+function drawPaddle() {
+    ctx.beginPath();
+    ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
     ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
 }
 
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
-
-    if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+    drawPaddle();
+    
+    if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
         dx = -dx;
     }
-    if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+    if(y + dy < ballRadius) {
         dy = -dy;
     }
-
+    else if(y + dy > canvas.height-ballRadius) {
+        if(x > paddleX && x < paddleX + paddleWidth) {
+            dy = -dy;
+        }
+        else {
+            alert("GAME OVER");
+            document.location.reload();
+            clearInterval(interval); // Needed for Chrome to end game
+        }
+    }
+    
+    if(rightPressed && paddleX < canvas.width-paddleWidth) {
+        paddleX += 7;
+    }
+    else if(leftPressed && paddleX > 0) {
+        paddleX -= 7;
+    }
+    
     x += dx;
     y += dy;
 }
@@ -51,4 +80,5 @@ function keyUpHandler(e) {
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
-setInterval(draw, 10);
+
+const interval = setInterval(draw, 10);
