@@ -10,7 +10,7 @@ const ballRadius = 10;
 let paddleHeight = 10;
 let paddleWidth = 75;
 let paddleX = (canvas.width - paddleWidth) / 2;
-let paddleSpeed = 7;
+let paddleSpeed = 4;
 
 let rightPressed = false;
 let leftPressed = false;
@@ -62,21 +62,22 @@ async function speedUp() {
     } else {
         dy = dy + 0.1;
     }
+    paddleSpeed = paddleSpeed + 0.1;
 }
 
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-    ctx.fillStyle = `hsl(${Math.random() * 360}, 80%, 60%)`;
-    // ctx.fillStyle = currColor;
+    //ctx.fillStyle = `hsl(${Math.random() * 360}, 80%, 60%)`;
+    ctx.fillStyle = currColor;
     ctx.fill();
     ctx.closePath();
 }
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-    ctx.fillStyle = `hsl(${Math.random() * 360}, 80%, 60%)`;
-    // ctx.fillStyle = "#0095DD";
+    //ctx.fillStyle = `hsl(${Math.random() * 360}, 80%, 60%)`;
+    ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
 }
@@ -98,6 +99,7 @@ function draw() {
         if (x > paddleX && x < paddleX + paddleWidth) {
             dy = -dy;
         } else {
+            return;
             alert("GAME OVER");
             document.location.reload();
             clearInterval(interval); // Needed for Chrome to end game
@@ -126,8 +128,8 @@ function drawBricks() {
                 bricks[c][r].y = brickY;
                 ctx.beginPath();
                 ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                ctx.fillStyle = `hsl(${Math.random() * 360}, 80%, 60%)`;
-                // ctx.fillStyle = "#0095DD";
+                //ctx.fillStyle = `hsl(${Math.random() * 360}, 80%, 60%)`;
+                ctx.fillStyle = "#0095DD";
                 ctx.fill();
                 ctx.closePath();
             }
