@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 
 let x = canvas.width / 2;
 let y = canvas.height - 30;
-let dx = 1.5;
+let dx = defineDx();
 let dy = -1.5;
 const ballRadius = 10;
 
@@ -30,6 +30,20 @@ for (let c = 0; c < brickColumnCount; c++) {
     }
 }
 
+function defineDx() {
+    const i = getRandomInteger(1, 2);
+    if (i === 1) {
+        return 1.5;
+    }
+    if (i === 2) {
+        return -1.5;
+    } else throw new Error(`Invalid Int: ${i}`);
+}
+
+function getRandomInteger(minValue, maxValue) {
+    return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+}
+
 let currColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
 
 async function changeColor() {
@@ -37,14 +51,14 @@ async function changeColor() {
 }
 async function speedUp() {
     if (dx < 0) {
-        dx = dx - 0.1
+        dx = dx - 0.1;
     } else {
-        dx = dx + 0.1
+        dx = dx + 0.1;
     }
     if (dy < 0) {
-        dy = dy - 0.1
+        dy = dy - 0.1;
     } else {
-        dy = dy + 0.1
+        dy = dy + 0.1;
     }
 }
 
