@@ -7,9 +7,10 @@ let dx = defineDx();
 let dy = -1.5;
 const ballRadius = 10;
 
-var paddleHeight = 10;
-var paddleWidth = 75;
-var paddleX = (canvas.width - paddleWidth) / 2;
+let paddleHeight = 10;
+let paddleWidth = 75;
+let paddleX = (canvas.width - paddleWidth) / 2;
+let paddleSpeed = 7;
 
 let rightPressed = false;
 let leftPressed = false;
