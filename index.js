@@ -10,6 +10,7 @@ const ballRadius = 10;
 var paddleHeight = 10;
 var paddleWidth = 75;
 var paddleX = (canvas.width - paddleWidth) / 2;
+
 let rightPressed = false;
 let leftPressed = false;
 
@@ -65,14 +66,16 @@ async function speedUp() {
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-    ctx.fillStyle = currColor;
+    ctx.fillStyle = `hsl(${Math.random() * 360}, 80%, 60%)`;
+    // ctx.fillStyle = currColor;
     ctx.fill();
     ctx.closePath();
 }
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = `hsl(${Math.random() * 360}, 80%, 60%)`;
+    // ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
 }
@@ -122,7 +125,8 @@ function drawBricks() {
                 bricks[c][r].y = brickY;
                 ctx.beginPath();
                 ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                ctx.fillStyle = "#0095DD";
+                ctx.fillStyle = `hsl(${Math.random() * 360}, 80%, 60%)`;
+                // ctx.fillStyle = "#0095DD";
                 ctx.fill();
                 ctx.closePath();
             }
