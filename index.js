@@ -1,5 +1,8 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
+ctx.textAlign = "center";
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 let x = canvas.width / 2;
 let y = canvas.height - 30;
@@ -16,6 +19,7 @@ let rightPressed = false;
 let leftPressed = false;
 
 let score = 0;
+let time = 0;
 
 const brickRowCount = 3;
 const brickColumnCount = 5;
@@ -29,6 +33,33 @@ for (let c = 0; c < brickColumnCount; c++) {
     bricks[c] = [];
     for (let r = 0; r < brickRowCount; r++) {
         bricks[c][r] = { x: 0, y: 0, status: 1 };
+    }
+}
+
+let rainbow = `hsl(${Math.random() * 360}, 80%, 60%)`;
+async function RandomColor() {
+    setInterval(async () => {
+        rainbow = `hsl(${Math.random() * 360}, 80%, 60%)`;
+        // console.log(rainbow)
+    }, 100);
+}
+
+async function BonusItem() {
+    const n = getRandomInteger(1, 5);
+    if (n === 1) {
+        return getRandomItem();
+    } else return getRandomItem();
+}
+
+async function getRandomItem() {
+    const n = getRandomInteger(1, 2);
+    if (n === 1) {
+        callNotification(`Paddle width changed!`);
+        paddleWidth = getRandomInteger(60, 85);
+    }
+    if (n === 2) {
+        callNotification(`Ball and Paddle speed decreased!`);
+        speedDown();
     }
 }
 
@@ -64,6 +95,19 @@ async function speedUp() {
     }
     paddleSpeed = paddleSpeed + 0.1;
 }
+async function speedDown() {
+    if (dx < 0) {
+        dx = dx + 0.1;
+    } else {
+        dx = dx - 0.1;
+    }
+    if (dy < 0) {
+        dy = dy + 0.1;
+    } else {
+        dy = dy - 0.1;
+    }
+    paddleSpeed = paddleSpeed - 0.1;
+}
 
 function drawBall() {
     ctx.beginPath();
@@ -87,7 +131,7 @@ function draw() {
     drawBricks();
     drawBall();
     drawPaddle();
-    drawScore();
+    drawInfo();
     collisionDetection();
 
     if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
@@ -99,9 +143,9 @@ function draw() {
         if (x > paddleX && x < paddleX + paddleWidth) {
             dy = -dy;
         } else {
-            return;
             alert("GAME OVER");
             document.location.reload();
+            clearInterval(Timer);
             clearInterval(interval); // Needed for Chrome to end game
         }
     }
@@ -150,12 +194,14 @@ function collisionDetection() {
                 ) {
                     dy = -dy;
                     b.status = 0;
+                    BonusItem();
                     score++;
                     speedUp();
                     changeColor();
                     if (score === brickRowCount * brickColumnCount) {
                         alert("YOU WIN, CONGRATULATIONS!");
                         document.location.reload();
+                        clearInterval(Timer);
                         clearInterval(interval); // Needed for Chrome to end game
                     }
                 }
@@ -164,12 +210,31 @@ function collisionDetection() {
     }
 }
 
-function drawScore() {
+function drawInfo() {
     ctx.font = "16px Arial";
     ctx.fillStyle = "#0095DD";
-    ctx.fillText(`Score: ${score}`, 8, 20);
+    ctx.fillText(
+        `Score: ${score} | You playing for ${time} seconds`,
+        canvas.width / 2,
+        20,
+    );
 }
 
+async function drawNotification(str) {
+    //
+}
+
+async function callNotification(str, time = 3) {
+    console.log("Calling");
+    const interval = setInterval(async () => {
+        // console.log('Called...')
+        ctx.font = "16px Arial";
+        ctx.fillStyle = rainbow;
+        ctx.fillText(str, canvas.width / 2, canvas.height / 2);
+    }, 1);
+    await sleep(time * 1000);
+    clearInterval(interval);
+}
 function keyDownHandler(e) {
     if (e.key === "Right" || e.key === "ArrowRight") {
         rightPressed = true;
@@ -188,5 +253,11 @@ function keyUpHandler(e) {
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+
+RandomColor();
+
+const Timer = setInterval(async () => {
+    time++;
+}, 1000);
 
 const interval = setInterval(draw, 10);
