@@ -186,10 +186,6 @@ function drawStr() {
     ctx.fillText(notifystr, canvas.width / 2, canvas.height / 2);
 }
 
-async function drawNotification(str) {
-    //
-}
-
 async function callNotification(str, time = 3) {
     console.log("Calling");
     notifystr = str;
