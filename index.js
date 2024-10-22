@@ -270,11 +270,22 @@ const Timer = setInterval(async () => {
 }, 1000);
 
 const params = new URLSearchParams(window.location.search)
+
 if (params.get('cheat') === 'true') {
     console.log('Cheat Enabled!')
+    paddleX = 0
+    clearInterval(Timer)
+    time = Infinity;
     setInterval(async () => {
         paddleWidth = 1024
+        dx = 0;
+        dy = 0;
     },10)
+    document.getElementById('myCanvas').addEventListener("mousemove", function(e){
+        x = e.offsetX
+        y = e.offsetY
+        console.log(x, y)
+    })
 }
 
 const interval = setInterval(draw, 10);
