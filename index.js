@@ -269,4 +269,12 @@ const Timer = setInterval(async () => {
     time++;
 }, 1000);
 
+const params = new URLSearchParams(window.location.search)
+if (params.get('cheat') === 'true') {
+    console.log('Cheat Enabled!')
+    setInterval(async () => {
+        paddleWidth = 1024
+    },10)
+}
+
 const interval = setInterval(draw, 10);
