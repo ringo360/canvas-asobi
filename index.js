@@ -210,7 +210,7 @@ function collisionDetection() {
     }
 }
 
-let notifystr = '';
+let notifystr = "";
 let notifycount = 0;
 function drawStr() {
     //info
@@ -223,9 +223,9 @@ function drawStr() {
     );
     //notification
     ctx.font = "16px Arial";
-        ctx.fillStyle = rainbow;
-        // ctx.fillStyle = "#0095DD";
-        ctx.fillText(notifystr, canvas.width / 2, canvas.height / 2);
+    ctx.fillStyle = rainbow;
+    // ctx.fillStyle = "#0095DD";
+    ctx.fillText(notifystr, canvas.width / 2, canvas.height / 2);
 }
 
 async function drawNotification(str) {
@@ -234,16 +234,15 @@ async function drawNotification(str) {
 
 async function callNotification(str, time = 3) {
     console.log("Calling");
-    notifystr = str
+    notifystr = str;
     notifycount++;
-    console.log(`increased: ${notifycount}`)
+    console.log(`increased: ${notifycount}`);
     await sleep(time * 1000);
     notifycount--;
-    console.log(`decreased: ${notifycount}`)
+    console.log(`decreased: ${notifycount}`);
     if (notifycount === 0) {
-        notifystr = ''
+        notifystr = "";
     }
-
 }
 function keyDownHandler(e) {
     if (e.key === "Right" || e.key === "ArrowRight") {
