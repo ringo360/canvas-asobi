@@ -46,16 +46,17 @@ async function RandomColor() {
 
 async function BonusItem() {
     const n = getRandomInteger(1, 5);
+    console.log(n)
     if (n === 1) {
         return getRandomItem();
-    } else return getRandomItem();
+    } else return;
 }
 
 async function getRandomItem() {
     const n = getRandomInteger(1, 2);
     if (n === 1) {
         callNotification(`Paddle width changed!`);
-        paddleWidth = getRandomInteger(60, 85);
+        paddleWidth = getRandomInteger(45, 125);
     }
     if (n === 2) {
         callNotification(`Ball and Paddle speed decreased!`);
