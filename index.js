@@ -2,38 +2,15 @@ const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 ctx.textAlign = "center";
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-let x = canvas.width / 2;
-let y = canvas.height - 30;
-let dx = defineDx();
-let dy = -1.5;
-const ballRadius = 10;
-
-let paddleHeight = 10;
-let paddleWidth = 75;
-let paddleX = (canvas.width - paddleWidth) / 2;
-let paddleSpeed = 4;
-
-let rightPressed = false;
-let leftPressed = false;
-
-let score = 0;
-let time = 0;
-
-const brickRowCount = 3;
-const brickColumnCount = 5;
-const brickWidth = 75;
-const brickHeight = 20;
-const brickPadding = 10;
-const brickOffsetTop = 30;
-const brickOffsetLeft = 30;
-const bricks = [];
 for (let c = 0; c < brickColumnCount; c++) {
     bricks[c] = [];
     for (let r = 0; r < brickRowCount; r++) {
         bricks[c][r] = { x: 0, y: 0, status: 1 };
     }
+}
+
+async function changeColor() {
+    currColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
 }
 
 let rainbow = `hsl(${Math.random() * 360}, 80%, 60%)`;
@@ -62,26 +39,6 @@ async function getRandomItem() {
         callNotification(`Ball and Paddle speed decreased!`);
         speedDown();
     }
-}
-
-function defineDx() {
-    const i = getRandomInteger(1, 2);
-    if (i === 1) {
-        return 1.5;
-    }
-    if (i === 2) {
-        return -1.5;
-    } else throw new Error(`Invalid Int: ${i}`);
-}
-
-function getRandomInteger(minValue, maxValue) {
-    return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
-}
-
-let currColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
-
-async function changeColor() {
-    currColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
 }
 async function speedUp() {
     if (dx < 0) {
