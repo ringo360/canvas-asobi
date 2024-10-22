@@ -41,7 +41,7 @@ async function RandomColor() {
     setInterval(async () => {
         rainbow = `hsl(${Math.random() * 360}, 80%, 60%)`;
         // console.log(rainbow)
-    }, 100);
+    }, 250);
 }
 
 async function BonusItem() {
@@ -131,7 +131,7 @@ function draw() {
     drawBricks();
     drawBall();
     drawPaddle();
-    drawInfo();
+    drawStr();
     collisionDetection();
 
     if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
@@ -210,7 +210,10 @@ function collisionDetection() {
     }
 }
 
-function drawInfo() {
+let notifystr = '';
+let notifycount = 0;
+function drawStr() {
+    //info
     ctx.font = "16px Arial";
     ctx.fillStyle = "#0095DD";
     ctx.fillText(
@@ -218,6 +221,11 @@ function drawInfo() {
         canvas.width / 2,
         20,
     );
+    //notification
+    ctx.font = "16px Arial";
+        ctx.fillStyle = rainbow;
+        // ctx.fillStyle = "#0095DD";
+        ctx.fillText(notifystr, canvas.width / 2, canvas.height / 2);
 }
 
 async function drawNotification(str) {
@@ -226,14 +234,16 @@ async function drawNotification(str) {
 
 async function callNotification(str, time = 3) {
     console.log("Calling");
-    const interval = setInterval(async () => {
-        // console.log('Called...')
-        ctx.font = "16px Arial";
-        ctx.fillStyle = rainbow;
-        ctx.fillText(str, canvas.width / 2, canvas.height / 2);
-    }, 1);
+    notifystr = str
+    notifycount++;
+    console.log(`increased: ${notifycount}`)
     await sleep(time * 1000);
-    clearInterval(interval);
+    notifycount--;
+    console.log(`decreased: ${notifycount}`)
+    if (notifycount === 0) {
+        notifystr = ''
+    }
+
 }
 function keyDownHandler(e) {
     if (e.key === "Right" || e.key === "ArrowRight") {
