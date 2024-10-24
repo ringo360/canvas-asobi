@@ -94,7 +94,7 @@ function draw() {
     if (y + dy < ballRadius) {
         dy = -dy;
     } else if (y + dy > canvas.height - ballRadius) {
-        if (x > paddleX && x < paddleX + paddleWidth) {
+        if (x > paddleX && x < paddleX + paddleWidth + ballRadius) {
             dy = -dy;
         } else {
             console.log(`Height: ${canvas.height} Radius: ${ballRadius} y: ${y} dy: ${dy} H-B: ${canvas.height - ballRadius} y+dy: ${y + dy}`)
