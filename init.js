@@ -4,6 +4,11 @@
  */
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// canvas init
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+ctx.textAlign = "center";
+
 //Balls
 let x = canvas.width / 2;
 let y = canvas.height - 30;
