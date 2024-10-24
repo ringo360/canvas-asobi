@@ -93,11 +93,11 @@ function draw() {
     }
     if (y + dy < ballRadius) {
         dy = -dy;
-    } else if (Math.round(y + dy) > canvas.height - ballRadius) {
+    } else if (y + dy > canvas.height - ballRadius) {
         if (x > paddleX && x < paddleX + paddleWidth) {
             dy = -dy;
         } else {
-            console.log(`Height: ${canvas.height} Radius: ${ballRadius} y: ${y} dy: ${dy} H-B: ${canvas.height - ballRadius} y+dy: ${Math.round(y + dy)}`)
+            console.log(`Height: ${canvas.height} Radius: ${ballRadius} y: ${y} dy: ${dy} H-B: ${canvas.height - ballRadius} y+dy: ${y + dy}`)
             alert("GAME OVER");
             document.location.reload();
             clearInterval(Timer);
